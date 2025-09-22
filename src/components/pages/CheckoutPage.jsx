@@ -15,6 +15,7 @@ const CheckoutPage = () => {
   const navigate = useNavigate()
   const { cartItems, clearCart, getCartTotal, getCartCount } = useCart()
   const [loading, setLoading] = useState(false)
+  const [currentStep, setCurrentStep] = useState("shipping")
   const [orderTotals, setOrderTotals] = useState(null)
   const [customerInfo, setCustomerInfo] = useState({
     email: "",
@@ -28,8 +29,13 @@ const CheckoutPage = () => {
       zipCode: ""
     }
   })
+  const [paymentInfo, setPaymentInfo] = useState({
+    cardNumber: "",
+    expiryDate: "",
+    cvv: "",
+    cardholderName: ""
+  })
   const [errors, setErrors] = useState({})
-  
   useEffect(() => {
     // Redirect to cart if no items
     if (cartItems.length === 0) {
@@ -75,9 +81,24 @@ const CheckoutPage = () => {
         [field]: ""
       }))
     }
+}
+  
+  const handlePaymentInputChange = (field, value) => {
+    setPaymentInfo(prev => ({
+      ...prev,
+      [field]: value
+    }))
+    
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({
+        ...prev,
+        [field]: ""
+      }))
+    }
   }
   
-  const validateForm = () => {
+  const validateShippingForm = () => {
     const newErrors = {}
     
     if (!customerInfo.email) {
@@ -117,10 +138,51 @@ const CheckoutPage = () => {
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
+
+  const validatePaymentForm = () => {
+    const newErrors = {}
+    
+    if (!paymentInfo.cardNumber) {
+      newErrors.cardNumber = "Card number is required"
+    } else if (paymentInfo.cardNumber.replace(/\s/g, '').length !== 16) {
+      newErrors.cardNumber = "Card number must be 16 digits"
+    }
+    
+    if (!paymentInfo.expiryDate) {
+      newErrors.expiryDate = "Expiry date is required"
+    } else if (!/^\d{2}\/\d{2}$/.test(paymentInfo.expiryDate)) {
+      newErrors.expiryDate = "Expiry date must be MM/YY format"
+    }
+    
+    if (!paymentInfo.cvv) {
+      newErrors.cvv = "CVV is required"
+    } else if (paymentInfo.cvv.length !== 3) {
+      newErrors.cvv = "CVV must be 3 digits"
+    }
+    
+    if (!paymentInfo.cardholderName) {
+      newErrors.cardholderName = "Cardholder name is required"
+    }
+    
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleContinueToPayment = () => {
+    if (!validateShippingForm()) {
+      toast.error("Please fill in all required shipping information")
+      return
+    }
+    setCurrentStep("payment")
+  }
+
+  const handleBackToShipping = () => {
+    setCurrentStep("shipping")
+  }
   
-  const handleSubmitOrder = async () => {
-    if (!validateForm()) {
-      toast.error("Please fill in all required fields")
+const handleSubmitOrder = async () => {
+    if (!validatePaymentForm()) {
+      toast.error("Please fill in all required payment information")
       return
     }
     
@@ -137,7 +199,11 @@ const CheckoutPage = () => {
         tax: orderTotals.tax,
         shipping: orderTotals.shipping,
         total: orderTotals.total,
-        customerInfo
+        customerInfo,
+        paymentInfo: {
+          cardNumber: paymentInfo.cardNumber.replace(/\s/g, '').slice(-4),
+          cardholderName: paymentInfo.cardholderName
+        }
       }
       
       const order = await orderService.createOrder(orderData)
@@ -167,7 +233,16 @@ const CheckoutPage = () => {
     return <Loading />
   }
   
-  const itemCount = getCartCount()
+const itemCount = getCartCount()
+  
+  const steps = [
+    { id: "cart", label: "Cart", icon: "ShoppingCart" },
+    { id: "shipping", label: "Shipping", icon: "MapPin" },
+    { id: "payment", label: "Payment", icon: "CreditCard" },
+    { id: "confirmation", label: "Confirmation", icon: "CheckCircle" }
+  ]
+  
+  const currentStepIndex = steps.findIndex(step => step.id === currentStep)
   
   return (
     <div className="space-y-8">
@@ -176,7 +251,7 @@ const CheckoutPage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center space-y-4"
+        className="text-center space-y-6"
       >
         <div className="w-16 h-16 bg-gradient-to-br from-primary to-blue-600 rounded-xl flex items-center justify-center mx-auto shadow-lg">
           <ApperIcon name="CreditCard" size={32} className="text-white" />
@@ -189,115 +264,295 @@ const CheckoutPage = () => {
         <p className="text-gray-600">
           Complete your order of {itemCount} item{itemCount !== 1 ? "s" : ""}
         </p>
+        
+        {/* Progress Steps */}
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center justify-between">
+            {steps.map((step, index) => {
+              const isCompleted = index < currentStepIndex + 1
+              const isCurrent = index === currentStepIndex + 1
+              const isUpcoming = index > currentStepIndex + 1
+              
+              return (
+                <div key={step.id} className="flex items-center flex-1">
+                  <div className="flex flex-col items-center">
+                    <div className={`
+                      w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300
+                      ${isCompleted ? 'bg-success text-white' : 
+                        isCurrent ? 'bg-primary text-white' : 
+                        'bg-gray-200 text-gray-400'}
+                    `}>
+                      <ApperIcon name={step.icon} size={16} />
+                    </div>
+                    <span className={`
+                      mt-2 text-xs font-medium
+                      ${isCompleted ? 'text-success' :
+                        isCurrent ? 'text-primary' :
+                        'text-gray-400'}
+                    `}>
+                      {step.label}
+                    </span>
+                  </div>
+                  
+                  {index < steps.length - 1 && (
+                    <div className={`
+                      flex-1 h-0.5 mx-4 transition-all duration-300
+                      ${isCompleted ? 'bg-success' : 'bg-gray-200'}
+                    `} />
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
       </motion.div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Customer Information */}
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Main Content */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1, duration: 0.6 }}
           className="space-y-6"
         >
-          {/* Contact Information */}
-          <div className="bg-white rounded-xl shadow-soft p-6 space-y-6">
-            <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-              <ApperIcon name="User" size={20} className="mr-2" />
-              Contact Information
-            </h2>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input
-                label="First Name"
-                value={customerInfo.firstName}
-                onChange={(e) => handleInputChange("firstName", e.target.value)}
-                error={errors.firstName}
-                placeholder="John"
-              />
+          {currentStep === "shipping" && (
+            <>
+              {/* Contact Information */}
+              <div className="bg-white rounded-xl shadow-soft p-6 space-y-6">
+                <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+                  <ApperIcon name="User" size={20} className="mr-2" />
+                  Contact Information
+                </h2>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Input
+                    label="First Name"
+                    value={customerInfo.firstName}
+                    onChange={(e) => handleInputChange("firstName", e.target.value)}
+                    error={errors.firstName}
+                    placeholder="John"
+                  />
+                  
+                  <Input
+                    label="Last Name"
+                    value={customerInfo.lastName}
+                    onChange={(e) => handleInputChange("lastName", e.target.value)}
+                    error={errors.lastName}
+                    placeholder="Doe"
+                  />
+                </div>
+                
+                <Input
+                  label="Email Address"
+                  type="email"
+                  value={customerInfo.email}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  error={errors.email}
+                  placeholder="john@example.com"
+                  icon="Mail"
+                />
+                
+                <Input
+                  label="Phone Number"
+                  type="tel"
+                  value={customerInfo.phone}
+                  onChange={(e) => handleInputChange("phone", e.target.value)}
+                  error={errors.phone}
+                  placeholder="(555) 123-4567"
+                  icon="Phone"
+                />
+              </div>
               
-              <Input
-                label="Last Name"
-                value={customerInfo.lastName}
-                onChange={(e) => handleInputChange("lastName", e.target.value)}
-                error={errors.lastName}
-                placeholder="Doe"
-              />
-            </div>
-            
-            <Input
-              label="Email Address"
-              type="email"
-              value={customerInfo.email}
-              onChange={(e) => handleInputChange("email", e.target.value)}
-              error={errors.email}
-              placeholder="john@example.com"
-              icon="Mail"
-            />
-            
-            <Input
-              label="Phone Number"
-              type="tel"
-              value={customerInfo.phone}
-              onChange={(e) => handleInputChange("phone", e.target.value)}
-              error={errors.phone}
-              placeholder="(555) 123-4567"
-              icon="Phone"
-            />
-          </div>
-          
-          {/* Shipping Address */}
-          <div className="bg-white rounded-xl shadow-soft p-6 space-y-6">
-            <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-              <ApperIcon name="MapPin" size={20} className="mr-2" />
-              Shipping Address
-            </h2>
-            
-            <Input
-              label="Street Address"
-              value={customerInfo.address.street}
-              onChange={(e) => handleInputChange("address.street", e.target.value)}
-              error={errors["address.street"]}
-              placeholder="123 Main St"
-            />
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input
-                label="City"
-                value={customerInfo.address.city}
-                onChange={(e) => handleInputChange("address.city", e.target.value)}
-                error={errors["address.city"]}
-                placeholder="San Francisco"
-              />
+              {/* Shipping Address */}
+              <div className="bg-white rounded-xl shadow-soft p-6 space-y-6">
+                <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+                  <ApperIcon name="MapPin" size={20} className="mr-2" />
+                  Shipping Address
+                </h2>
+                
+                <Input
+                  label="Street Address"
+                  value={customerInfo.address.street}
+                  onChange={(e) => handleInputChange("address.street", e.target.value)}
+                  error={errors["address.street"]}
+                  placeholder="123 Main St"
+                />
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Input
+                    label="City"
+                    value={customerInfo.address.city}
+                    onChange={(e) => handleInputChange("address.city", e.target.value)}
+                    error={errors["address.city"]}
+                    placeholder="San Francisco"
+                  />
+                  
+                  <Input
+                    label="State"
+                    value={customerInfo.address.state}
+                    onChange={(e) => handleInputChange("address.state", e.target.value)}
+                    error={errors["address.state"]}
+                    placeholder="CA"
+                  />
+                </div>
+                
+                <Input
+                  label="ZIP Code"
+                  value={customerInfo.address.zipCode}
+                  onChange={(e) => handleInputChange("address.zipCode", e.target.value)}
+                  error={errors["address.zipCode"]}
+                  placeholder="94105"
+                />
+              </div>
               
-              <Input
-                label="State"
-                value={customerInfo.address.state}
-                onChange={(e) => handleInputChange("address.state", e.target.value)}
-                error={errors["address.state"]}
-                placeholder="CA"
-              />
-            </div>
-            
-            <Input
-              label="ZIP Code"
-              value={customerInfo.address.zipCode}
-              onChange={(e) => handleInputChange("address.zipCode", e.target.value)}
-              error={errors["address.zipCode"]}
-              placeholder="94105"
-            />
-          </div>
+              {/* Shipping Method */}
+              <div className="bg-white rounded-xl shadow-soft p-6 space-y-6">
+                <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+                  <ApperIcon name="Truck" size={20} className="mr-2" />
+                  Delivery Options
+                </h2>
+                
+                <div className="border border-primary bg-primary/5 rounded-lg p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-5 h-5 border-2 border-primary bg-primary rounded-full flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Standard Delivery</p>
+                        <p className="text-sm text-gray-600">5-7 business days</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-gray-900">
+                        {orderTotals?.shipping === 0 ? (
+                          <span className="text-success">FREE</span>
+                        ) : (
+                          <Price amount={orderTotals?.shipping || 9.99} size="sm" showDiscount={false} />
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Navigation */}
+              <div className="flex gap-4">
+                <Button
+                  variant="outline"
+                  icon="ArrowLeft"
+                  onClick={handleBackToCart}
+                  className="flex-1 shadow-soft hover:shadow-soft-lg"
+                >
+                  Back to Cart
+                </Button>
+                
+                <Button
+                  variant="primary"
+                  icon="ArrowRight"
+                  onClick={handleContinueToPayment}
+                  className="flex-1 shadow-lg hover:shadow-glow"
+                >
+                  Continue to Payment
+                </Button>
+              </div>
+            </>
+          )}
           
-          {/* Back to Cart */}
-          <Button
-            variant="outline"
-            icon="ArrowLeft"
-            onClick={handleBackToCart}
-            className="w-full shadow-soft hover:shadow-soft-lg"
-          >
-            Back to Cart
-          </Button>
+          {currentStep === "payment" && (
+            <>
+              {/* Payment Information */}
+              <div className="bg-white rounded-xl shadow-soft p-6 space-y-6">
+                <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+                  <ApperIcon name="CreditCard" size={20} className="mr-2" />
+                  Payment Information
+                </h2>
+                
+                <Input
+                  label="Cardholder Name"
+                  value={paymentInfo.cardholderName}
+                  onChange={(e) => handlePaymentInputChange("cardholderName", e.target.value)}
+                  error={errors.cardholderName}
+                  placeholder="John Doe"
+                />
+                
+                <Input
+                  label="Card Number"
+                  value={paymentInfo.cardNumber}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ')
+                    handlePaymentInputChange("cardNumber", value)
+                  }}
+                  error={errors.cardNumber}
+                  placeholder="1234 5678 9012 3456"
+                  maxLength={19}
+                />
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Input
+                    label="Expiry Date"
+                    value={paymentInfo.expiryDate}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, '').replace(/(\d{2})(\d{1,2})/, '$1/$2')
+                      handlePaymentInputChange("expiryDate", value)
+                    }}
+                    error={errors.expiryDate}
+                    placeholder="MM/YY"
+                    maxLength={5}
+                  />
+                  
+                  <Input
+                    label="CVV"
+                    value={paymentInfo.cvv}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, '')
+                      handlePaymentInputChange("cvv", value)
+                    }}
+                    error={errors.cvv}
+                    placeholder="123"
+                    maxLength={3}
+                  />
+                </div>
+              </div>
+              
+              {/* Security Notice */}
+              <div className="bg-gradient-to-r from-success/5 to-green-600/5 rounded-xl p-4 border border-success/20">
+                <div className="flex items-start space-x-3">
+                  <ApperIcon name="Shield" size={20} className="text-success mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium text-success">Secure Payment</p>
+                    <p className="text-xs text-success/80 mt-1">
+                      Your payment information is encrypted and secure. We never store your credit card details.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Navigation */}
+              <div className="flex gap-4">
+                <Button
+                  variant="outline"
+                  icon="ArrowLeft"
+                  onClick={handleBackToShipping}
+                  className="flex-1 shadow-soft hover:shadow-soft-lg"
+                >
+                  Back to Shipping
+                </Button>
+                
+                <Button
+                  variant="primary"
+                  icon="CheckCircle"
+                  onClick={handleSubmitOrder}
+                  loading={loading}
+                  disabled={loading}
+                  className="flex-1 shadow-lg hover:shadow-glow"
+                >
+                  {loading ? "Processing..." : "Place Order"}
+                </Button>
+              </div>
+            </>
+          )}
         </motion.div>
-        
         {/* Order Summary */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}

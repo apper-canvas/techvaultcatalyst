@@ -46,6 +46,29 @@ const orderService = {
     return { ...orders[orderIndex] }
   },
 
+  async calculateTotals(cartItems) {
+    await delay(200)
+    
+    const subtotal = cartItems.reduce((sum, item) => {
+      return sum + (item.product.price * item.quantity)
+    }, 0)
+    
+    // Free shipping over $100, otherwise $9.99
+    const shipping = subtotal >= 100 ? 0 : 9.99
+    
+    // 8.5% tax rate
+    const tax = subtotal * 0.085
+    
+    const total = subtotal + shipping + tax
+    
+    return {
+      subtotal: parseFloat(subtotal.toFixed(2)),
+      shipping: parseFloat(shipping.toFixed(2)),
+      tax: parseFloat(tax.toFixed(2)),
+      total: parseFloat(total.toFixed(2))
+    }
+  },
+
   async calculateTotals(items) {
     await delay(100)
     
