@@ -211,10 +211,9 @@ upiId: ""
     setCurrentStep("payment");
   }
 
-  const handleBackToShipping = () => {
 const handleBackToShipping = () => {
     setCurrentStep("shipping");
-  }
+  };
   
   const handleSubmitOrder = async () => {
     if (!validatePaymentForm()) {
@@ -917,4 +916,4 @@ const itemCount = getCartCount()
   )
 }
 
-export default CheckoutPage
+export default CheckoutPage;
