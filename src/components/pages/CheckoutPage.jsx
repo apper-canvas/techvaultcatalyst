@@ -232,7 +232,7 @@ items: cartItems.map(item => ({
     } finally {
       setLoading(false)
     }
-  }
+}
   
   const handleBackToCart = () => {
     navigate("/cart")

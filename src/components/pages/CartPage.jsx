@@ -24,7 +24,7 @@ const CartPage = () => {
         toast.info("Cart cleared successfully")
       }, 300)
     }
-  }
+}
   
   const handleCheckout = () => {
     navigate("/checkout")
