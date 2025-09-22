@@ -1,0 +1,63 @@
+[
+  {
+    "Id": 1,
+    "items": [
+      {
+        "productId": "1",
+        "quantity": 1,
+        "price": 999.99
+      },
+      {
+        "productId": "5",
+        "quantity": 1,
+        "price": 249.99
+      }
+    ],
+    "subtotal": 1249.98,
+    "tax": 99.99,
+    "shipping": 0,
+    "total": 1349.97,
+    "status": "delivered",
+    "createdAt": "2024-01-15T10:30:00Z",
+    "customerInfo": {
+      "email": "john@example.com",
+      "firstName": "John",
+      "lastName": "Doe",
+      "phone": "555-0123",
+      "address": {
+        "street": "123 Main St",
+        "city": "San Francisco",
+        "state": "CA",
+        "zipCode": "94105"
+      }
+    }
+  },
+  {
+    "Id": 2,
+    "items": [
+      {
+        "productId": "3",
+        "quantity": 1,
+        "price": 1999.99
+      }
+    ],
+    "subtotal": 1999.99,
+    "tax": 159.99,
+    "shipping": 0,
+    "total": 2159.98,
+    "status": "processing",
+    "createdAt": "2024-01-20T14:22:00Z",
+    "customerInfo": {
+      "email": "sarah@example.com",
+      "firstName": "Sarah",
+      "lastName": "Johnson",
+      "phone": "555-0456",
+      "address": {
+        "street": "456 Oak Ave",
+        "city": "New York",
+        "state": "NY",
+        "zipCode": "10001"
+      }
+    }
+  }
+]

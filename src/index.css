@@ -1,0 +1,228 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import 'react-toastify/dist/ReactToastify.css';
+
+:root {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 400;
+  color-scheme: light;
+  color: #213547;
+  background-color: #f8fafc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Toast customization */
+.Toastify__toast-container {
+  width: auto;
+  max-width: 400px;
+  z-index: 9999;
+}
+
+.Toastify__toast {
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  backdrop-filter: blur(8px);
+}
+
+.Toastify__toast--success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.Toastify__toast--error {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+}
+
+.Toastify__toast--info {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+}
+
+.Toastify__progress-bar {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* Smooth animations */
+* {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, opacity 0.2s ease-out;
+}
+
+/* Custom utilities */
+@layer components {
+  .card {
+    @apply bg-white rounded-xl shadow-soft hover:shadow-soft-lg transition-all duration-300;
+  }
+  
+  .card-hover {
+    @apply hover:scale-[1.02] hover:-translate-y-1;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent;
+  }
+  
+  .gradient-bg {
+    @apply bg-gradient-to-br from-white via-blue-50 to-indigo-50;
+  }
+  
+  .button-primary {
+    @apply bg-gradient-to-r from-primary to-blue-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-glow transform hover:scale-105 transition-all duration-300;
+  }
+  
+  .button-secondary {
+    @apply bg-white text-primary border-2 border-primary font-semibold px-6 py-3 rounded-xl hover:bg-primary hover:text-white transition-all duration-300;
+  }
+}
+
+/* Skeleton loader animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+/* Cart animation */
+.cart-item-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.cart-item-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.cart-item-exit {
+  opacity: 1;
+}
+
+.cart-item-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Price highlight animation */
+@keyframes price-highlight {
+  0% { background-color: transparent; }
+  50% { background-color: rgba(245, 158, 11, 0.2); }
+  100% { background-color: transparent; }
+}
+
+.price-highlight {
+  animation: price-highlight 0.6s ease-in-out;
+}
+
+/* Mobile touch improvements */
+@media (hover: none) {
+  .hover\:scale-\[1\.02\]:hover {
+    transform: none;
+  }
+  
+  .hover\:-translate-y-1:hover {
+    transform: none;
+  }
+}
+
+/* Focus states for accessibility */
+.focus\:ring-primary:focus {
+  --tw-ring-color: rgba(37, 99, 235, 0.3);
+}
+
+button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Search input styling */
+.search-input {
+  @apply w-full px-4 py-3 pl-12 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300;
+}
+
+/* Custom range slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-track {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #2563eb;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  border: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #2563eb;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}

@@ -1,0 +1,622 @@
+[
+  {
+    "Id": 1,
+    "name": "iPhone 15 Pro",
+    "category": "Phones",
+    "brand": "Apple",
+    "price": 999.99,
+    "originalPrice": 1099.99,
+    "discount": 9,
+    "image": "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=600&q=80",
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&q=80",
+      "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=600&q=80"
+    ],
+    "description": "The most advanced iPhone ever with titanium design, A17 Pro chip, and revolutionary camera system.",
+    "specifications": {
+      "Display": "6.1-inch Super Retina XDR",
+      "Processor": "A17 Pro chip",
+      "Storage": "128GB",
+      "Camera": "48MP Main + 12MP Ultra Wide + 12MP Telephoto",
+      "Battery": "Up to 23 hours video playback",
+      "Operating System": "iOS 17",
+      "Colors": "Natural Titanium, Blue Titanium, White Titanium, Black Titanium",
+      "Water Resistance": "IP68"
+    },
+    "inStock": true,
+    "stockCount": 25,
+    "rating": 4.8,
+    "reviewCount": 1247,
+    "featured": true
+  },
+  {
+    "Id": 2,
+    "name": "Samsung Galaxy S24 Ultra",
+    "category": "Phones",
+    "brand": "Samsung",
+    "price": 1199.99,
+    "originalPrice": 1299.99,
+    "discount": 8,
+    "image": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&q=80",
+      "https://images.unsplash.com/photo-1574755393849-623942496936?w=600&q=80",
+      "https://images.unsplash.com/photo-1603891128711-11b4b03bb138?w=600&q=80"
+    ],
+    "description": "Ultimate flagship smartphone with S Pen, 200MP camera, and cutting-edge AI features.",
+    "specifications": {
+      "Display": "6.8-inch Dynamic AMOLED 2X",
+      "Processor": "Snapdragon 8 Gen 3",
+      "Storage": "256GB",
+      "Camera": "200MP Main + 50MP Periscope + 10MP Telephoto + 12MP Ultra Wide",
+      "Battery": "5000mAh with 45W fast charging",
+      "Operating System": "One UI 6.1 (Android 14)",
+      "Special Features": "Built-in S Pen, AI Photo Editing",
+      "Water Resistance": "IP68"
+    },
+    "inStock": true,
+    "stockCount": 18,
+    "rating": 4.7,
+    "reviewCount": 892,
+    "featured": true
+  },
+  {
+    "Id": 3,
+    "name": "MacBook Pro 14-inch",
+    "category": "Laptops",
+    "brand": "Apple",
+    "price": 1999.99,
+    "originalPrice": 2199.99,
+    "discount": 9,
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&q=80",
+      "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600&q=80",
+      "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=600&q=80"
+    ],
+    "description": "Supercharged by M3 Pro chip. Built for professionals who need uncompromising performance.",
+    "specifications": {
+      "Display": "14.2-inch Liquid Retina XDR",
+      "Processor": "M3 Pro chip",
+      "Memory": "18GB unified memory",
+      "Storage": "512GB SSD",
+      "Graphics": "18-core GPU",
+      "Battery": "Up to 18 hours",
+      "Ports": "3x Thunderbolt 4, HDMI, SDXC, MagSafe 3",
+      "Operating System": "macOS Sonoma"
+    },
+    "inStock": true,
+    "stockCount": 12,
+    "rating": 4.9,
+    "reviewCount": 567,
+    "featured": true
+  },
+  {
+    "Id": 4,
+    "name": "Dell XPS 13 Plus",
+    "category": "Laptops",
+    "brand": "Dell",
+    "price": 1299.99,
+    "originalPrice": 1499.99,
+    "discount": 13,
+    "image": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&q=80",
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&q=80",
+      "https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=600&q=80"
+    ],
+    "description": "Premium ultrabook with stunning design, exceptional performance, and all-day battery life.",
+    "specifications": {
+      "Display": "13.4-inch InfinityEdge OLED",
+      "Processor": "Intel Core i7-1360P",
+      "Memory": "16GB LPDDR5",
+      "Storage": "512GB NVMe SSD",
+      "Graphics": "Intel Iris Xe",
+      "Battery": "Up to 12 hours",
+      "Ports": "2x Thunderbolt 4",
+      "Operating System": "Windows 11 Pro"
+    },
+    "inStock": true,
+    "stockCount": 8,
+    "rating": 4.6,
+    "reviewCount": 432,
+    "featured": false
+  },
+  {
+    "Id": 5,
+    "name": "AirPods Pro (2nd Gen)",
+    "category": "Accessories",
+    "brand": "Apple",
+    "price": 249.99,
+    "originalPrice": 279.99,
+    "discount": 11,
+    "image": "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=600&q=80",
+      "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=600&q=80",
+      "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&q=80"
+    ],
+    "description": "Next-generation AirPods Pro with adaptive transparency and personalized spatial audio.",
+    "specifications": {
+      "Driver": "Custom high-excursion driver",
+      "Noise Cancellation": "Active Noise Cancellation",
+      "Battery": "6 hours + 30 hours with case",
+      "Connectivity": "Bluetooth 5.3",
+      "Water Resistance": "IPX4",
+      "Features": "Adaptive Transparency, Spatial Audio, Hey Siri",
+      "Case": "MagSafe and wireless charging",
+      "Compatibility": "iPhone, iPad, Mac, Apple Watch"
+    },
+    "inStock": true,
+    "stockCount": 35,
+    "rating": 4.5,
+    "reviewCount": 2341,
+    "featured": true
+  },
+  {
+    "Id": 6,
+    "name": "Sony WH-1000XM5",
+    "category": "Accessories",
+    "brand": "Sony",
+    "price": 399.99,
+    "originalPrice": 429.99,
+    "discount": 7,
+    "image": "https://images.unsplash.com/photo-1577174881658-0f30ed549adc?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1577174881658-0f30ed549adc?w=600&q=80",
+      "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&q=80",
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80"
+    ],
+    "description": "Industry-leading noise canceling headphones with exceptional sound quality and comfort.",
+    "specifications": {
+      "Driver": "30mm dynamic drivers",
+      "Noise Cancellation": "Industry-leading Active Noise Canceling",
+      "Battery": "Up to 30 hours",
+      "Connectivity": "Bluetooth 5.2, NFC",
+      "Quick Charge": "3 min = 3 hours playback",
+      "Features": "Multipoint connection, Speak-to-Chat, Quick Attention",
+      "Voice Assistant": "Google Assistant, Alexa built-in",
+      "Colors": "Black, Silver"
+    },
+    "inStock": true,
+    "stockCount": 22,
+    "rating": 4.6,
+    "reviewCount": 1876,
+    "featured": true
+  },
+  {
+    "Id": 7,
+    "name": "Google Pixel 8 Pro",
+    "category": "Phones",
+    "brand": "Google",
+    "price": 899.99,
+    "originalPrice": 999.99,
+    "discount": 10,
+    "image": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600&q=80",
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&q=80",
+      "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=600&q=80"
+    ],
+    "description": "AI-powered smartphone with computational photography and pure Android experience.",
+    "specifications": {
+      "Display": "6.7-inch LTPO OLED",
+      "Processor": "Google Tensor G3",
+      "Storage": "128GB",
+      "Camera": "50MP Main + 48MP Ultra Wide + 48MP Telephoto",
+      "Battery": "5050mAh with 30W fast charging",
+      "Operating System": "Android 14",
+      "Special Features": "Magic Eraser, Live Translate, Call Screen",
+      "Water Resistance": "IP68"
+    },
+    "inStock": true,
+    "stockCount": 16,
+    "rating": 4.4,
+    "reviewCount": 743,
+    "featured": false
+  },
+  {
+    "Id": 8,
+    "name": "ASUS ROG Zephyrus G14",
+    "category": "Laptops",
+    "brand": "ASUS",
+    "price": 1599.99,
+    "originalPrice": 1799.99,
+    "discount": 11,
+    "image": "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600&q=80",
+      "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=600&q=80",
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&q=80"
+    ],
+    "description": "Compact gaming powerhouse with AMD Ryzen processor and NVIDIA RTX graphics.",
+    "specifications": {
+      "Display": "14-inch QHD 165Hz",
+      "Processor": "AMD Ryzen 9 7940HS",
+      "Memory": "16GB DDR5",
+      "Storage": "1TB NVMe SSD",
+      "Graphics": "NVIDIA GeForce RTX 4060",
+      "Battery": "Up to 10 hours",
+      "Ports": "USB-C, USB-A, HDMI 2.1, 3.5mm audio",
+      "Operating System": "Windows 11 Home"
+    },
+    "inStock": true,
+    "stockCount": 5,
+    "rating": 4.7,
+    "reviewCount": 234,
+    "featured": false
+  },
+  {
+    "Id": 9,
+    "name": "iPad Air (5th Gen)",
+    "category": "Accessories",
+    "brand": "Apple",
+    "price": 599.99,
+    "originalPrice": 649.99,
+    "discount": 8,
+    "image": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&q=80",
+      "https://images.unsplash.com/photo-1585789575046-b541b69a7c9c?w=600&q=80",
+      "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80"
+    ],
+    "description": "Versatile tablet powered by M1 chip with stunning Liquid Retina display.",
+    "specifications": {
+      "Display": "10.9-inch Liquid Retina",
+      "Processor": "Apple M1 chip",
+      "Storage": "64GB",
+      "Camera": "12MP Wide, 12MP Ultra Wide front",
+      "Battery": "Up to 10 hours",
+      "Connectivity": "Wi-Fi 6, Bluetooth 5.0",
+      "Compatible": "Apple Pencil (2nd gen), Magic Keyboard",
+      "Operating System": "iPadOS 17"
+    },
+    "inStock": true,
+    "stockCount": 28,
+    "rating": 4.5,
+    "reviewCount": 1324,
+    "featured": true
+  },
+  {
+    "Id": 10,
+    "name": "Samsung 49-inch Odyssey G9",
+    "category": "Accessories",
+    "brand": "Samsung",
+    "price": 1299.99,
+    "originalPrice": 1599.99,
+    "discount": 19,
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&q=80",
+      "https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=600&q=80",
+      "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600&q=80"
+    ],
+    "description": "Ultra-wide curved gaming monitor with QLED technology and 240Hz refresh rate.",
+    "specifications": {
+      "Screen Size": "49-inch curved",
+      "Resolution": "5120x1440 (Dual QHD)",
+      "Panel Type": "VA QLED",
+      "Refresh Rate": "240Hz",
+      "Response Time": "1ms GTG",
+      "HDR": "HDR1000",
+      "Connectivity": "DisplayPort 1.4, HDMI 2.1, USB hub",
+      "Features": "G-Sync Compatible, FreeSync Premium Pro"
+    },
+    "inStock": true,
+    "stockCount": 7,
+    "rating": 4.8,
+    "reviewCount": 456,
+    "featured": false
+  },
+  {
+    "Id": 11,
+    "name": "OnePlus 12",
+    "category": "Phones",
+    "brand": "OnePlus",
+    "price": 799.99,
+    "originalPrice": 899.99,
+    "discount": 11,
+    "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&q=80",
+      "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600&q=80",
+      "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=600&q=80"
+    ],
+    "description": "Flagship killer with Snapdragon 8 Gen 3, 100W fast charging, and Hasselblad cameras.",
+    "specifications": {
+      "Display": "6.82-inch LTPO AMOLED",
+      "Processor": "Snapdragon 8 Gen 3",
+      "Storage": "256GB UFS 4.0",
+      "Camera": "50MP Main + 64MP Periscope + 48MP Ultra Wide",
+      "Battery": "5400mAh with 100W SUPERVOOC",
+      "Operating System": "OxygenOS 14 (Android 14)",
+      "Special Features": "Hasselblad Camera, Alert Slider",
+      "Water Resistance": "IP65"
+    },
+    "inStock": true,
+    "stockCount": 14,
+    "rating": 4.6,
+    "reviewCount": 587,
+    "featured": false
+  },
+  {
+    "Id": 12,
+    "name": "Microsoft Surface Laptop Studio 2",
+    "category": "Laptops",
+    "brand": "Microsoft",
+    "price": 1999.99,
+    "originalPrice": 2299.99,
+    "discount": 13,
+    "image": "https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=600&q=80",
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&q=80",
+      "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&q=80"
+    ],
+    "description": "Versatile creative powerhouse with unique hinge design and RTX graphics.",
+    "specifications": {
+      "Display": "14.4-inch PixelSense Flow Touchscreen",
+      "Processor": "Intel Core i7-13700H",
+      "Memory": "32GB LPDDR5x",
+      "Storage": "1TB NVMe SSD",
+      "Graphics": "NVIDIA GeForce RTX 4050",
+      "Battery": "Up to 19 hours",
+      "Ports": "2x USB-C, 1x USB-A, Surface Connect",
+      "Operating System": "Windows 11 Pro"
+    },
+    "inStock": true,
+    "stockCount": 6,
+    "rating": 4.4,
+    "reviewCount": 189,
+    "featured": false
+  },
+  {
+    "Id": 13,
+    "name": "Razer DeathAdder V3 Pro",
+    "category": "Accessories",
+    "brand": "Razer",
+    "price": 149.99,
+    "originalPrice": 179.99,
+    "discount": 17,
+    "image": "https://images.unsplash.com/photo-1613141411244-0e4ac64eb24b?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1613141411244-0e4ac64eb24b?w=600&q=80",
+      "https://images.unsplash.com/photo-1612117742900-e18dcb94e4f1?w=600&q=80",
+      "https://images.unsplash.com/photo-1563297007-0686b64864d8?w=600&q=80"
+    ],
+    "description": "Professional gaming mouse with Focus Pro 30K sensor and 90-hour battery life.",
+    "specifications": {
+      "Sensor": "Focus Pro 30K Optical",
+      "DPI": "Up to 30,000",
+      "Buttons": "8 programmable buttons",
+      "Battery": "Up to 90 hours",
+      "Connectivity": "HyperSpeed Wireless 2.4GHz",
+      "Weight": "63g",
+      "Features": "Ergonomic design, Chroma RGB",
+      "Compatibility": "PC, Mac"
+    },
+    "inStock": true,
+    "stockCount": 42,
+    "rating": 4.7,
+    "reviewCount": 834,
+    "featured": false
+  },
+  {
+    "Id": 14,
+    "name": "Logitech MX Master 3S",
+    "category": "Accessories",
+    "brand": "Logitech",
+    "price": 99.99,
+    "originalPrice": 119.99,
+    "discount": 17,
+    "image": "https://images.unsplash.com/photo-1563297007-0686b64864d8?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1563297007-0686b64864d8?w=600&q=80",
+      "https://images.unsplash.com/photo-1613141411244-0e4ac64eb24b?w=600&q=80",
+      "https://images.unsplash.com/photo-1612117742900-e18dcb94e4f1?w=600&q=80"
+    ],
+    "description": "Premium wireless mouse designed for productivity with MagSpeed scrolling and Flow technology.",
+    "specifications": {
+      "Sensor": "Darkfield high precision",
+      "DPI": "200-8000 adjustable",
+      "Buttons": "7 buttons",
+      "Battery": "Up to 70 days",
+      "Connectivity": "Bluetooth, USB-C receiver",
+      "Features": "MagSpeed scroll wheel, Logitech Flow",
+      "Compatibility": "Windows, macOS, Linux, Chrome OS",
+      "Colors": "Graphite, Pale Gray"
+    },
+    "inStock": true,
+    "stockCount": 31,
+    "rating": 4.6,
+    "reviewCount": 1245,
+    "featured": true
+  },
+  {
+    "Id": 15,
+    "name": "Nothing Phone (2)",
+    "category": "Phones",
+    "brand": "Nothing",
+    "price": 679.99,
+    "originalPrice": 749.99,
+    "discount": 9,
+    "image": "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=600&q=80",
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&q=80",
+      "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600&q=80"
+    ],
+    "description": "Unique transparent design with Glyph interface and flagship performance.",
+    "specifications": {
+      "Display": "6.7-inch LTPO OLED",
+      "Processor": "Snapdragon 8+ Gen 1",
+      "Storage": "256GB UFS 3.1",
+      "Camera": "50MP Main + 50MP Ultra Wide",
+      "Battery": "4700mAh with 45W fast charging",
+      "Operating System": "Nothing OS 2.0 (Android 13)",
+      "Special Features": "Glyph Interface, Transparent Design",
+      "Water Resistance": "IP54"
+    },
+    "inStock": true,
+    "stockCount": 19,
+    "rating": 4.3,
+    "reviewCount": 392,
+    "featured": false
+  },
+  {
+    "Id": 16,
+    "name": "Alienware m18 R1",
+    "category": "Laptops",
+    "brand": "Dell",
+    "price": 2499.99,
+    "originalPrice": 2899.99,
+    "discount": 14,
+    "image": "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=600&q=80",
+      "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600&q=80",
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&q=80"
+    ],
+    "description": "Ultimate gaming laptop with 18-inch display, RTX 4080, and advanced cooling.",
+    "specifications": {
+      "Display": "18-inch QHD+ 165Hz",
+      "Processor": "Intel Core i9-13980HX",
+      "Memory": "32GB DDR5",
+      "Storage": "1TB NVMe SSD",
+      "Graphics": "NVIDIA GeForce RTX 4080",
+      "Battery": "Up to 6 hours",
+      "Ports": "USB-C, USB-A, HDMI 2.1, Ethernet",
+      "Operating System": "Windows 11 Home"
+    },
+    "inStock": true,
+    "stockCount": 3,
+    "rating": 4.8,
+    "reviewCount": 127,
+    "featured": false
+  },
+  {
+    "Id": 17,
+    "name": "SteelSeries Arctis Nova Pro Wireless",
+    "category": "Accessories",
+    "brand": "SteelSeries",
+    "price": 349.99,
+    "originalPrice": 399.99,
+    "discount": 13,
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80",
+      "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&q=80",
+      "https://images.unsplash.com/photo-1577174881658-0f30ed549adc?w=600&q=80"
+    ],
+    "description": "Premium wireless gaming headset with active noise cancellation and GameDAC Gen 2.",
+    "specifications": {
+      "Driver": "40mm Neodymium drivers",
+      "Frequency Response": "10Hz - 40kHz",
+      "Microphone": "ClearCast Gen 2 retractable",
+      "Battery": "44+ hours total (with case)",
+      "Connectivity": "2.4GHz wireless, Bluetooth 5.0",
+      "Features": "Active Noise Cancellation, GameDAC Gen 2",
+      "Compatibility": "PC, PlayStation, Nintendo Switch, Mobile",
+      "Colors": "Black"
+    },
+    "inStock": true,
+    "stockCount": 15,
+    "rating": 4.5,
+    "reviewCount": 298,
+    "featured": false
+  },
+  {
+    "Id": 18,
+    "name": "NVIDIA Shield TV Pro",
+    "category": "Accessories",
+    "brand": "NVIDIA",
+    "price": 199.99,
+    "originalPrice": 229.99,
+    "discount": 13,
+    "image": "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600&q=80",
+      "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&q=80",
+      "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&q=80"
+    ],
+    "description": "4K HDR streaming device with AI upscaling and GeForce NOW gaming.",
+    "specifications": {
+      "Processor": "NVIDIA Tegra X1+",
+      "Memory": "3GB RAM",
+      "Storage": "16GB + microSD slot",
+      "Video": "4K HDR, Dolby Vision, Dolby Atmos",
+      "Connectivity": "Wi-Fi 6, Bluetooth 5.0, Gigabit Ethernet",
+      "Ports": "2x USB 3.0, HDMI 2.0b, microSD",
+      "Features": "AI upscaling, GeForce NOW, Google Assistant",
+      "Operating System": "Android TV"
+    },
+    "inStock": true,
+    "stockCount": 21,
+    "rating": 4.4,
+    "reviewCount": 712,
+    "featured": false
+  },
+  {
+    "Id": 19,
+    "name": "Corsair K70 RGB Pro",
+    "category": "Accessories",
+    "brand": "Corsair",
+    "price": 179.99,
+    "originalPrice": 209.99,
+    "discount": 14,
+    "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&q=80",
+      "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=600&q=80",
+      "https://images.unsplash.com/photo-1563297007-0686b64864d8?w=600&q=80"
+    ],
+    "description": "Premium mechanical gaming keyboard with per-key RGB and tournament switch.",
+    "specifications": {
+      "Switches": "Cherry MX Speed Silver",
+      "Layout": "Full-size (104 keys)",
+      "Backlighting": "Per-key RGB",
+      "Frame": "Aircraft-grade aluminum",
+      "Connectivity": "USB-A with USB pass-through",
+      "Features": "Dedicated media keys, volume wheel",
+      "Software": "iCUE RGB lighting and macro programming",
+      "Dimensions": "440mm x 166mm x 36mm"
+    },
+    "inStock": true,
+    "stockCount": 26,
+    "rating": 4.7,
+    "reviewCount": 643,
+    "featured": false
+  },
+  {
+    "Id": 20,
+    "name": "Apple Watch Ultra 2",
+    "category": "Accessories",
+    "brand": "Apple",
+    "price": 799.99,
+    "originalPrice": 849.99,
+    "discount": 6,
+    "image": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&q=80",
+      "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=600&q=80",
+      "https://images.unsplash.com/photo-1609081219090-a6d81d3085bf?w=600&q=80"
+    ],
+    "description": "Most rugged and capable Apple Watch with precision dual-frequency GPS.",
+    "specifications": {
+      "Display": "49mm Retina LTPO OLED",
+      "Case": "Titanium",
+      "Water Resistance": "100 meters",
+      "Battery": "Up to 36 hours normal use",
+      "Processor": "S9 SiP",
+      "Storage": "64GB",
+      "Features": "Action Button, Digital Crown, Emergency SOS",
+      "Sensors": "GPS, Cellular, ECG, Blood Oxygen, Temperature"
+    },
+    "inStock": true,
+    "stockCount": 13,
+    "rating": 4.6,
+    "reviewCount": 489,
+    "featured": true
+  }
+]
