@@ -12,9 +12,9 @@ const orderService = {
     const newOrder = {
       Id: Math.max(...orders.map(o => o.Id), 0) + 1,
       ...orderData,
-      status: "processing",
+status: "processing",
       createdAt: new Date().toISOString(),
-      estimatedDelivery: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString()
+      estimatedDelivery: calculateEstimatedDelivery(orderData.shippingMethod?.type || 'standard')
     }
     
     orders.push(newOrder)
@@ -46,15 +46,28 @@ const orderService = {
     return { ...orders[orderIndex] }
   },
 
-  async calculateTotals(cartItems) {
+async calculateTotals(cartItems, shippingType = 'standard') {
     await delay(200)
     
     const subtotal = cartItems.reduce((sum, item) => {
       return sum + (item.product.price * item.quantity)
     }, 0)
     
-    // Free shipping over $100, otherwise $9.99
-    const shipping = subtotal >= 100 ? 0 : 9.99
+    // Calculate shipping based on method and free shipping threshold
+    let shipping = 0
+    if (subtotal < 100 || shippingType !== 'standard') {
+      switch (shippingType) {
+        case 'express':
+          shipping = 19.99
+          break
+        case 'nextday':
+          shipping = 29.99
+          break
+        default: // standard
+          shipping = subtotal >= 100 ? 0 : 9.99
+          break
+      }
+    }
     
     // 8.5% tax rate
     const tax = subtotal * 0.085
@@ -69,24 +82,26 @@ const orderService = {
     }
   },
 
-  async calculateTotals(items) {
-    await delay(100)
-    
-    const subtotal = items.reduce((sum, item) => {
-      return sum + (item.product.price * item.quantity)
-    }, 0)
-    
-    const tax = subtotal * 0.08 // 8% tax
-    const shipping = subtotal > 100 ? 0 : 15.99 // Free shipping over $100
-    const total = subtotal + tax + shipping
-    
-    return {
-      subtotal: Math.round(subtotal * 100) / 100,
-      tax: Math.round(tax * 100) / 100,
-      shipping: Math.round(shipping * 100) / 100,
-      total: Math.round(total * 100) / 100
-    }
+}
+
+// Helper function to calculate estimated delivery date
+function calculateEstimatedDelivery(shippingType) {
+  const now = Date.now()
+  let days = 7 // default standard shipping
+  
+  switch (shippingType) {
+    case 'nextday':
+      days = 1
+      break
+    case 'express':
+      days = 3
+      break
+    default: // standard
+      days = 7
+      break
   }
+  
+  return new Date(now + days * 24 * 60 * 60 * 1000).toISOString()
 }
 
 export default orderService

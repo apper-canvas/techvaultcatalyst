@@ -213,12 +213,19 @@ const OrderConfirmationPage = () => {
               </p>
             </div>
             
-            {order.estimatedDelivery && (
+{order.estimatedDelivery && (
               <div className="bg-gradient-to-r from-info/10 to-blue-600/10 rounded-lg p-4 border border-info/20">
-                <p className="text-sm text-info">
-                  <ApperIcon name="Truck" size={14} className="inline mr-1" />
-                  Estimated delivery: {format(new Date(order.estimatedDelivery), "EEEE, MMM d")}
-                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-info">
+                    <ApperIcon name="Truck" size={14} className="inline mr-1" />
+                    Estimated delivery: {format(new Date(order.estimatedDelivery), "EEEE, MMM d")}
+                  </p>
+                  {order.shippingMethod && (
+                    <span className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
+                      {order.shippingMethod.name}
+                    </span>
+                  )}
+                </div>
               </div>
             )}
           </div>

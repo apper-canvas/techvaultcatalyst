@@ -36,8 +36,8 @@ const CartPage = () => {
   
   const cartTotal = getCartTotal()
   const itemCount = getCartCount()
-  const shipping = cartTotal > 100 ? 0 : 15.99
-  const tax = cartTotal * 0.08
+const shipping = cartTotal > 100 ? 0 : 9.99
+  const tax = cartTotal * 0.085
   const finalTotal = cartTotal + shipping + tax
   
   if (cartItems.length === 0) {
@@ -144,7 +144,7 @@ const CartPage = () => {
             
             {/* Summary Details */}
             <div className="space-y-4">
-              <div className="flex justify-between text-gray-600">
+<div className="flex justify-between text-gray-600">
                 <span>Subtotal ({itemCount} items)</span>
                 <Price amount={cartTotal} size="sm" showDiscount={false} />
               </div>
@@ -162,7 +162,7 @@ const CartPage = () => {
               </div>
               
               <div className="flex justify-between text-gray-600">
-                <span>Tax (8%)</span>
+                <span>Tax (8.5%)</span>
                 <Price amount={tax} size="sm" showDiscount={false} />
               </div>
               
@@ -174,6 +174,31 @@ const CartPage = () => {
                   <Price amount={finalTotal} size="lg" showDiscount={false} />
                 </div>
               </div>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="space-y-3">
+              <Button
+                onClick={handleCheckout}
+                variant="primary"
+                size="lg"
+                className="w-full"
+                disabled={cartItems.length === 0}
+              >
+                <ApperIcon name="CreditCard" size={18} className="mr-2" />
+                Proceed to Checkout
+              </Button>
+              
+              <Button
+                onClick={handleCheckout}
+                variant="secondary"
+                size="lg"
+                className="w-full"
+                disabled={cartItems.length === 0}
+              >
+                <ApperIcon name="Zap" size={18} className="mr-2" />
+                Buy Now
+              </Button>
             </div>
             
             {/* Free Shipping Info */}

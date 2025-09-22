@@ -78,6 +78,16 @@ const useCart = () => {
     return cartItems.find(item => item.productId === productId)
   }
 
+const buyNow = (product, quantity = 1) => {
+    // Create temporary cart item for buy now
+    return {
+      productId: product.Id,
+      product: product,
+      quantity: quantity,
+      addedAt: new Date().toISOString()
+    }
+  }
+
   return {
     cartItems,
     addToCart,
@@ -87,7 +97,8 @@ const useCart = () => {
     getCartTotal,
     getCartCount,
     isInCart,
-    getCartItem
+    getCartItem,
+    buyNow
   }
 }
 
