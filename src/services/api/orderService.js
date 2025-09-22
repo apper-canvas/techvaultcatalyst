@@ -81,6 +81,19 @@ async calculateTotals(cartItems, shippingType = 'standard') {
       total: parseFloat(total.toFixed(2))
     }
   },
+async getProductById(id) {
+    // This would normally be in a separate product service
+    // but adding here for order review functionality
+    const productsModule = await import("@/services/mockData/products.json")
+    const products = productsModule.default
+    
+    await delay(100)
+    const product = products.find(p => p.Id === parseInt(id))
+    if (!product) {
+      throw new Error("Product not found")
+    }
+    return { ...product }
+  }
 
 }
 

@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { motion } from "framer-motion"
-import { toast } from "react-toastify"
-import ApperIcon from "@/components/ApperIcon"
-import Button from "@/components/atoms/Button"
-import Input from "@/components/atoms/Input"
-import Price from "@/components/atoms/Price"
-import CartItem from "@/components/molecules/CartItem"
-import Loading from "@/components/ui/Loading"
-import useCart from "@/hooks/useCart"
-import orderService from "@/services/api/orderService"
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { toast } from "react-toastify";
+import ApperIcon from "@/components/ApperIcon";
+import CartItem from "@/components/molecules/CartItem";
+import Loading from "@/components/ui/Loading";
+import Input from "@/components/atoms/Input";
+import Button from "@/components/atoms/Button";
+import Price from "@/components/atoms/Price";
+import useCart from "@/hooks/useCart";
+import orderService from "@/services/api/orderService";
 
 const CheckoutPage = () => {
-  const navigate = useNavigate()
-  const { cartItems, clearCart, getCartTotal, getCartCount } = useCart()
-  const [loading, setLoading] = useState(false)
-  const [currentStep, setCurrentStep] = useState("shipping")
-  const [orderTotals, setOrderTotals] = useState(null)
-const [customerInfo, setCustomerInfo] = useState({
+  const navigate = useNavigate();
+  const { cartItems, clearCart, getCartTotal, getCartCount } = useCart();
+  const [loading, setLoading] = useState(false);
+  const [currentStep, setCurrentStep] = useState("shipping");
+  const [orderTotals, setOrderTotals] = useState(null);
+  const [customerInfo, setCustomerInfo] = useState({
     email: "",
     firstName: "",
     lastName: "",
@@ -34,15 +34,24 @@ const [customerInfo, setCustomerInfo] = useState({
     type: 'standard',
     name: 'Standard Delivery',
     days: '5-7 business days',
-    price: 9.99
-  })
+price: 9.99
+  });
+  const [paymentMethod, setPaymentMethod] = useState("credit-card");
   const [paymentInfo, setPaymentInfo] = useState({
     cardNumber: "",
     expiryDate: "",
     cvv: "",
-    cardholderName: ""
-  })
-  const [errors, setErrors] = useState({})
+    cardholderName: "",
+    paypalEmail: "",
+upiId: ""
+  });
+  const [errors, setErrors] = useState({});
+  
+  // Add missing function
+  const handleBackToCart = () => {
+    navigate("/cart");
+  };
+
   useEffect(() => {
     // Redirect to cart if no items
     if (cartItems.length === 0) {
@@ -148,34 +157,48 @@ const [customerInfo, setCustomerInfo] = useState({
 
   const validatePaymentForm = () => {
     const newErrors = {}
-    
-    if (!paymentInfo.cardNumber) {
-      newErrors.cardNumber = "Card number is required"
-    } else if (paymentInfo.cardNumber.replace(/\s/g, '').length !== 16) {
-      newErrors.cardNumber = "Card number must be 16 digits"
-    }
-    
-    if (!paymentInfo.expiryDate) {
-      newErrors.expiryDate = "Expiry date is required"
-    } else if (!/^\d{2}\/\d{2}$/.test(paymentInfo.expiryDate)) {
-      newErrors.expiryDate = "Expiry date must be MM/YY format"
-    }
-    
-    if (!paymentInfo.cvv) {
-      newErrors.cvv = "CVV is required"
-    } else if (paymentInfo.cvv.length !== 3) {
-      newErrors.cvv = "CVV must be 3 digits"
-    }
-    
-    if (!paymentInfo.cardholderName) {
-      newErrors.cardholderName = "Cardholder name is required"
+// Validate based on payment method
+    if (paymentMethod === "credit-card" || paymentMethod === "debit-card") {
+      if (!paymentInfo.cardNumber) {
+        newErrors.cardNumber = "Card number is required"
+      } else if (paymentInfo.cardNumber.replace(/\s/g, '').length !== 16) {
+        newErrors.cardNumber = "Card number must be 16 digits"
+      }
+      
+      if (!paymentInfo.expiryDate) {
+        newErrors.expiryDate = "Expiry date is required"
+      } else if (!/^\d{2}\/\d{2}$/.test(paymentInfo.expiryDate)) {
+        newErrors.expiryDate = "Expiry date must be MM/YY format"
+      }
+      
+      if (!paymentInfo.cvv) {
+        newErrors.cvv = "CVV is required"
+      } else if (paymentInfo.cvv.length !== 3) {
+        newErrors.cvv = "CVV must be 3 digits"
+      }
+      
+      if (!paymentInfo.cardholderName) {
+        newErrors.cardholderName = "Cardholder name is required"
+      }
+    } else if (paymentMethod === "paypal") {
+      if (!paymentInfo.paypalEmail) {
+        newErrors.paypalEmail = "PayPal email is required"
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(paymentInfo.paypalEmail)) {
+        newErrors.paypalEmail = "Please enter a valid email address"
+      }
+    } else if (paymentMethod === "upi") {
+      if (!paymentInfo.upiId) {
+        newErrors.upiId = "UPI ID is required"
+      } else if (!/^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/.test(paymentInfo.upiId)) {
+        newErrors.upiId = "Please enter a valid UPI ID"
+      }
     }
     
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
-  }
+}
 
-const handleContinueToPayment = () => {
+  const handleContinueToPayment = () => {
     if (!validateShippingForm()) {
       toast.error("Please fill in all required shipping information")
       return
@@ -184,15 +207,16 @@ const handleContinueToPayment = () => {
     if (!shippingMethod.type) {
       toast.error("Please select a shipping method")
       return
-    }
-    setCurrentStep("payment")
+}
+    setCurrentStep("payment");
   }
 
   const handleBackToShipping = () => {
-    setCurrentStep("shipping")
+const handleBackToShipping = () => {
+    setCurrentStep("shipping");
   }
   
-const handleSubmitOrder = async () => {
+  const handleSubmitOrder = async () => {
     if (!validatePaymentForm()) {
       toast.error("Please fill in all required payment information")
       return
@@ -213,10 +237,8 @@ items: cartItems.map(item => ({
         shippingMethod: shippingMethod,
         total: orderTotals.total,
         customerInfo,
-        paymentInfo: {
-          cardNumber: paymentInfo.cardNumber.replace(/\s/g, '').slice(-4),
-          cardholderName: paymentInfo.cardholderName
-        }
+paymentMethod,
+        paymentInfo: getPaymentInfoForOrder()
       }
       
       const order = await orderService.createOrder(orderData)
@@ -234,14 +256,34 @@ items: cartItems.map(item => ({
     }
 }
   
-  const handleBackToCart = () => {
-    navigate("/cart")
+// Helper function to format payment info for order
+  const getPaymentInfoForOrder = () => {
+    switch (paymentMethod) {
+      case "credit-card":
+      case "debit-card":
+        return {
+          type: paymentMethod,
+          cardNumber: paymentInfo.cardNumber.replace(/\s/g, '').slice(-4),
+          cardholderName: paymentInfo.cardholderName
+        }
+      case "paypal":
+        return {
+          type: paymentMethod,
+          email: paymentInfo.paypalEmail
+        }
+      case "upi":
+        return {
+          type: paymentMethod,
+          upiId: paymentInfo.upiId
+        }
+      default:
+return { type: paymentMethod }
+    }
   }
   
   if (cartItems.length === 0) {
     return <Loading />
   }
-  
   if (!orderTotals) {
     return <Loading />
   }
@@ -250,9 +292,16 @@ const itemCount = getCartCount()
   
   const steps = [
     { id: "cart", label: "Cart", icon: "ShoppingCart" },
-    { id: "shipping", label: "Shipping", icon: "MapPin" },
+{ id: "shipping", label: "Shipping", icon: "MapPin" },
     { id: "payment", label: "Payment", icon: "CreditCard" },
     { id: "confirmation", label: "Confirmation", icon: "CheckCircle" }
+  ]
+
+  const paymentMethods = [
+    { id: "credit-card", label: "Credit Card", icon: "CreditCard" },
+    { id: "debit-card", label: "Debit Card", icon: "CreditCard" },
+    { id: "paypal", label: "PayPal", icon: "Wallet" },
+    { id: "upi", label: "UPI", icon: "Smartphone" }
   ]
   
   const currentStepIndex = steps.findIndex(step => step.id === currentStep)
@@ -573,60 +622,152 @@ const itemCount = getCartCount()
             </>
           )}
           
-          {currentStep === "payment" && (
+{currentStep === "payment" && (
             <>
-              {/* Payment Information */}
+              {/* Payment Method Selection */}
               <div className="bg-white rounded-xl shadow-soft p-6 space-y-6">
                 <h2 className="text-xl font-semibold text-gray-900 flex items-center">
                   <ApperIcon name="CreditCard" size={20} className="mr-2" />
+                  Payment Method
+                </h2>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {paymentMethods.map((method) => (
+                    <div
+                      key={method.id}
+                      className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
+                        paymentMethod === method.id
+                          ? "border-primary bg-primary/5 shadow-soft"
+                          : "border-gray-200 hover:border-gray-300 hover:shadow-soft"
+                      }`}
+                      onClick={() => setPaymentMethod(method.id)}
+                    >
+                      <div className="flex flex-col items-center space-y-2">
+                        <ApperIcon 
+                          name={method.icon} 
+                          size={24} 
+                          className={paymentMethod === method.id ? "text-primary" : "text-gray-400"}
+                        />
+                        <span className={`text-sm font-medium ${
+                          paymentMethod === method.id ? "text-primary" : "text-gray-600"
+                        }`}>
+                          {method.label}
+                        </span>
+                      </div>
+                      
+                      {paymentMethod === method.id && (
+                        <div className="absolute -top-2 -right-2 w-5 h-5 bg-primary rounded-full flex items-center justify-center">
+                          <ApperIcon name="Check" size={12} className="text-white" />
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Payment Information */}
+              <div className="bg-white rounded-xl shadow-soft p-6 space-y-6">
+                <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+                  <ApperIcon name="Lock" size={20} className="mr-2" />
                   Payment Information
                 </h2>
                 
-                <Input
-                  label="Cardholder Name"
-                  value={paymentInfo.cardholderName}
-                  onChange={(e) => handlePaymentInputChange("cardholderName", e.target.value)}
-                  error={errors.cardholderName}
-                  placeholder="John Doe"
-                />
-                
-                <Input
-                  label="Card Number"
-                  value={paymentInfo.cardNumber}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ')
-                    handlePaymentInputChange("cardNumber", value)
-                  }}
-                  error={errors.cardNumber}
-                  placeholder="1234 5678 9012 3456"
-                  maxLength={19}
-                />
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Input
-                    label="Expiry Date"
-                    value={paymentInfo.expiryDate}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, '').replace(/(\d{2})(\d{1,2})/, '$1/$2')
-                      handlePaymentInputChange("expiryDate", value)
-                    }}
-                    error={errors.expiryDate}
-                    placeholder="MM/YY"
-                    maxLength={5}
-                  />
-                  
-                  <Input
-                    label="CVV"
-                    value={paymentInfo.cvv}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, '')
-                      handlePaymentInputChange("cvv", value)
-                    }}
-                    error={errors.cvv}
-                    placeholder="123"
-                    maxLength={3}
-                  />
-                </div>
+                {(paymentMethod === "credit-card" || paymentMethod === "debit-card") && (
+                  <>
+                    <Input
+                      label="Cardholder Name"
+                      value={paymentInfo.cardholderName}
+                      onChange={(e) => handlePaymentInputChange("cardholderName", e.target.value)}
+                      error={errors.cardholderName}
+                      placeholder="John Doe"
+                    />
+                    
+                    <Input
+                      label="Card Number"
+                      value={paymentInfo.cardNumber}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ')
+                        handlePaymentInputChange("cardNumber", value)
+                      }}
+                      error={errors.cardNumber}
+                      placeholder="1234 5678 9012 3456"
+                      maxLength={19}
+                    />
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <Input
+                        label="Expiry Date"
+                        value={paymentInfo.expiryDate}
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/\D/g, '').replace(/(\d{2})(\d{1,2})/, '$1/$2')
+                          handlePaymentInputChange("expiryDate", value)
+                        }}
+                        error={errors.expiryDate}
+                        placeholder="MM/YY"
+                        maxLength={5}
+                      />
+                      
+                      <Input
+                        label="CVV"
+                        value={paymentInfo.cvv}
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/\D/g, '')
+                          handlePaymentInputChange("cvv", value)
+                        }}
+                        error={errors.cvv}
+                        placeholder="123"
+                        maxLength={3}
+                      />
+                    </div>
+                  </>
+                )}
+
+                {paymentMethod === "paypal" && (
+                  <div className="space-y-4">
+                    <Input
+                      label="PayPal Email"
+                      value={paymentInfo.paypalEmail}
+                      onChange={(e) => handlePaymentInputChange("paypalEmail", e.target.value)}
+                      error={errors.paypalEmail}
+                      placeholder="your-email@example.com"
+                      type="email"
+                    />
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <div className="flex items-start space-x-3">
+                        <ApperIcon name="Info" size={20} className="text-blue-600 mt-0.5" />
+                        <div>
+                          <p className="text-sm font-medium text-blue-800">PayPal Payment</p>
+                          <p className="text-xs text-blue-600 mt-1">
+                            You will be redirected to PayPal to complete your payment securely.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {paymentMethod === "upi" && (
+                  <div className="space-y-4">
+                    <Input
+                      label="UPI ID"
+                      value={paymentInfo.upiId}
+                      onChange={(e) => handlePaymentInputChange("upiId", e.target.value)}
+                      error={errors.upiId}
+                      placeholder="yourname@paytm"
+                    />
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                      <div className="flex items-start space-x-3">
+                        <ApperIcon name="Smartphone" size={20} className="text-green-600 mt-0.5" />
+                        <div>
+                          <p className="text-sm font-medium text-green-800">UPI Payment</p>
+                          <p className="text-xs text-green-600 mt-1">
+                            A payment request will be sent to your UPI app for authorization.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
               
               {/* Security Notice */}
@@ -636,7 +777,7 @@ const itemCount = getCartCount()
                   <div>
                     <p className="text-sm font-medium text-success">Secure Payment</p>
                     <p className="text-xs text-success/80 mt-1">
-                      Your payment information is encrypted and secure. We never store your credit card details.
+                      Your payment information is encrypted and secure. We never store your payment details.
                     </p>
                   </div>
                 </div>
@@ -661,7 +802,7 @@ const itemCount = getCartCount()
                   disabled={loading}
                   className="flex-1 shadow-lg hover:shadow-glow"
                 >
-                  {loading ? "Processing..." : "Place Order"}
+                  {loading ? "Processing..." : `Pay with ${paymentMethods.find(m => m.id === paymentMethod)?.label}`}
                 </Button>
               </div>
             </>
@@ -681,14 +822,29 @@ const itemCount = getCartCount()
               Order Summary ({itemCount} items)
             </h2>
             
-            <div className="space-y-4 max-h-64 overflow-y-auto">
+<div className="space-y-4 max-h-64 overflow-y-auto">
               {cartItems.map((item) => (
-                <CartItem
-                  key={item.productId}
-                  item={item}
-                  showRemove={false}
-                  className="shadow-none border p-3"
-                />
+                <div key={item.productId} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border">
+                  <div className="w-16 h-16 bg-gray-200 rounded-lg overflow-hidden">
+                    <img 
+                      src={item.product.image} 
+                      alt={item.product.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-gray-900">{item.product.name}</h4>
+                    <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                    {item.product.brand && (
+                      <p className="text-xs text-gray-400">{item.product.brand}</p>
+                    )}
+                  </div>
+                  
+                  <div className="text-right">
+                    <Price amount={item.product.price * item.quantity} size="sm" showDiscount={false} />
+                  </div>
+                </div>
               ))}
             </div>
           </div>

@@ -245,30 +245,67 @@ const OrderConfirmationPage = () => {
               Order Items ({order.items.length})
             </h2>
             
-            <div className="space-y-4">
+<div className="space-y-4">
               {order.items.map((item, index) => (
-                <div key={index} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
-                  <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center">
+                <div key={index} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                  <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
                     <ApperIcon name="Package" size={20} className="text-gray-400" />
                   </div>
                   
                   <div className="flex-1">
-                    <p className="font-medium text-gray-900">Product #{item.productId}</p>
+                    <p className="font-semibold text-gray-900">Product #{item.productId}</p>
                     <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
+                    <p className="text-sm text-gray-500">Unit Price: ${item.price.toFixed(2)}</p>
                   </div>
                   
-                  <Price amount={item.price * item.quantity} size="sm" showDiscount={false} />
+                  <div className="text-right">
+                    <Price amount={item.price * item.quantity} size="sm" showDiscount={false} />
+                  </div>
                 </div>
               ))}
             </div>
           </div>
           
-          {/* Payment Summary */}
+{/* Payment Summary */}
           <div className="bg-white rounded-xl shadow-soft p-6 space-y-4">
             <h2 className="text-xl font-semibold text-gray-900 flex items-center">
               <ApperIcon name="CreditCard" size={20} className="mr-2" />
               Payment Summary
             </h2>
+            
+            {/* Payment Method Info */}
+            {order.paymentMethod && (
+              <div className="bg-gray-50 rounded-lg p-4 border">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <ApperIcon 
+                      name={order.paymentMethod === 'credit-card' || order.paymentMethod === 'debit-card' ? 'CreditCard' : 
+                           order.paymentMethod === 'paypal' ? 'Wallet' : 'Smartphone'} 
+                      size={20} 
+                      className="text-primary" 
+                    />
+                    <div>
+                      <p className="font-medium text-gray-900 capitalize">
+                        {order.paymentMethod.replace('-', ' ')} Payment
+                      </p>
+                      {order.paymentInfo?.cardNumber && (
+                        <p className="text-sm text-gray-500">**** **** **** {order.paymentInfo.cardNumber}</p>
+                      )}
+                      {order.paymentInfo?.email && (
+                        <p className="text-sm text-gray-500">{order.paymentInfo.email}</p>
+                      )}
+                      {order.paymentInfo?.upiId && (
+                        <p className="text-sm text-gray-500">{order.paymentInfo.upiId}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <ApperIcon name="CheckCircle" size={16} className="text-success" />
+                    <span className="text-sm font-medium text-success">Paid</span>
+                  </div>
+                </div>
+              </div>
+            )}
             
             <div className="space-y-3">
               <div className="flex justify-between text-gray-600">
