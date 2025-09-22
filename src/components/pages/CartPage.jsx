@@ -187,20 +187,8 @@ const shipping = cartTotal > 100 ? 0 : 9.99
               >
                 <ApperIcon name="CreditCard" size={18} className="mr-2" />
                 Proceed to Checkout
-              </Button>
-              
-              <Button
-                onClick={handleCheckout}
-                variant="secondary"
-                size="lg"
-                className="w-full"
-                disabled={cartItems.length === 0}
-              >
-                <ApperIcon name="Zap" size={18} className="mr-2" />
-                Buy Now
-              </Button>
+</Button>
             </div>
-            
             {/* Free Shipping Info */}
             {cartTotal <= 100 && (
               <div className="bg-gradient-to-r from-accent/10 to-orange-500/10 rounded-lg p-4 border border-accent/20">
@@ -211,18 +199,7 @@ const shipping = cartTotal > 100 ? 0 : 9.99
                   </span>
                 </div>
               </div>
-            )}
-            
-            {/* Checkout Button */}
-            <Button
-              variant="primary"
-              size="lg"
-              icon="CreditCard"
-              onClick={handleCheckout}
-              className="w-full shadow-lg hover:shadow-glow"
-            >
-              Proceed to Checkout
-            </Button>
+)}
             
             {/* Security Info */}
             <div className="flex items-center justify-center text-sm text-gray-500 space-x-2">

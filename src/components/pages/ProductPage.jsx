@@ -60,9 +60,9 @@ const ProductPage = () => {
     })
   }
   
-  const handleBuyNow = () => {
+const handleBuyNow = () => {
     addToCart(product, quantity)
-    navigate("/cart")
+    navigate("/checkout")
   }
   
   const handleImageChange = (index) => {
